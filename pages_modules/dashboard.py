@@ -27,7 +27,7 @@ def show():
     biz = st.session_state.business_name
 
     st.markdown(f"""
-    <div class="page-title">Good day, {st.session_state.username.split()[0]} 👋</div>
+    <div class="page-title">Good day, {st.session_state.username.split()[0]}</div>
     <div class="page-subtitle">{biz} · Live business pulse · {date.today().strftime("%B %d, %Y")}</div>
     """, unsafe_allow_html=True)
 
@@ -41,12 +41,12 @@ def show():
 
     # ── KPI Cards ─────────────────────────────────────────────────────────────
     c1, c2, c3, c4 = st.columns(4)
-    cards = [
-        (c1, "💰", "Total Revenue",  kpi["month_income"],  kpi.get("income_growth", 0),   "#00D4AA"),
-        (c2, "💸", "Total Expenses", kpi["month_expense"],
-         ((kpi["month_expense"]-kpi["last_expense"])/kpi["last_expense"]*100 if kpi["last_expense"] else 0), "#FF6B6B"),
-        (c3, "📈", "Net Profit",     kpi["month_profit"],  kpi.get("income_growth", 0),    "#6C63FF"),
-        (c4, "🏷️", "Profit Margin",  kpi["margin"],        0,                               "#FFB347"),
+   cards = [
+        (c1, "&#8358;", "Total Revenue",  kpi["month_income"],  kpi.get("income_growth", 0),   "#7C3AED"),
+        (c2, "&#9653;", "Total Expenses", kpi["month_expense"],
+         ((kpi["month_expense"]-kpi["last_expense"])/kpi["last_expense"]*100 if kpi["last_expense"] else 0), "#EF4444"),
+        (c3, "&#9651;", "Net Profit",     kpi["month_profit"],  kpi.get("income_growth", 0),    "#06B6D4"),
+        (c4, "&#37;",   "Profit Margin",  kpi["margin"],        0,                               "#10B981"),
     ]
     for col, icon, label, value, delta, color in cards:
         with col:
@@ -68,7 +68,7 @@ def show():
     col_left, col_right = st.columns([2, 1])
 
     with col_left:
-        st.markdown('<div class="card-title">📊 Revenue vs Expenses (Last 30 Days)</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9641; Revenue vs Expenses (Last 30 Days)</div>', unsafe_allow_html=True)
         daily = get_daily_summary(bid, days=30)
         if not daily.empty:
             fig = ch.area_chart(daily, "txn_date", ["income", "expense", "profit"],
@@ -78,7 +78,7 @@ def show():
             st.info("Not enough data.")
 
     with col_right:
-        st.markdown('<div class="card-title">🍕 Expense Breakdown</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9685; Expense Breakdown</div>', unsafe_allow_html=True)
         _, exp_cat = get_category_summary(bid)
         if not exp_cat.empty:
             fig = ch.donut_chart(exp_cat["category"].tolist(),
@@ -90,7 +90,7 @@ def show():
     col_l2, col_r2 = st.columns([1, 2])
 
     with col_l2:
-        st.markdown('<div class="card-title">🏆 Top Income Sources</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9670; Top Income Sources</div>', unsafe_allow_html=True)
         inc_cat, _ = get_category_summary(bid)
         if not inc_cat.empty:
             top = inc_cat.sort_values("amount", ascending=False).head(5)
@@ -113,7 +113,7 @@ def show():
                 next_m_profit = fcast["profit"].sum()
                 st.markdown(f"""
                 <div class="forecast-tag">
-                    🤖 AI Prediction · Next 30 days estimated profit:
+                    &#9670; AI Prediction · Next 30 days estimated profit::
                     <strong style="color:#6C63FF">{fmt(next_m_profit)}</strong>
                 </div>
                 """, unsafe_allow_html=True)
@@ -124,27 +124,27 @@ def show():
     col_al, col_inv = st.columns([1, 2])
 
     with col_al:
-        st.markdown('<div class="card-title">🚨 Inventory Alerts</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9888; Inventory Alerts</div>', unsafe_allow_html=True)
         low = [p for p in products if 0 < p["stock"] <= p["low_stock_threshold"]]
         out = [p for p in products if p["stock"] == 0]
         if out:
             for p in out[:3]:
-                st.markdown(f'<div class="alert alert-danger">🔴 <b>{p["name"]}</b> — Out of stock!</div>',
+                st.markdown(f'<div class="alert alert-danger">&#9632; <b>{p["name"]}</b> — Out of stock!</div>',
                             unsafe_allow_html=True)
         if low:
             for p in low[:3]:
-                st.markdown(f'<div class="alert alert-warning">⚠️ <b>{p["name"]}</b> — Only {p["stock"]} left</div>',
+                st.markdown(f'<div class="alert alert-warning">&#9650; <b>{p["name"]}</b> — Only {p["stock"]} left</div>',
                             unsafe_allow_html=True)
         if not low and not out:
-            st.markdown('<div class="alert alert-success">✅ All products adequately stocked</div>',
+            st.markdown('<div class="alert alert-success">&#10003; All products adequately stocked</div>',
                         unsafe_allow_html=True)
 
     with col_inv:
-        st.markdown('<div class="card-title">📦 Inventory Overview</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9723; Inventory Overview</div>', unsafe_allow_html=True)
         if products:
             df_prod = pd.DataFrame(products)[["name", "stock", "sale_price", "low_stock_threshold"]]
             df_prod["Status"] = df_prod.apply(
-                lambda r: "🔴 Out" if r["stock"] == 0 else ("⚠️ Low" if r["stock"] <= r["low_stock_threshold"] else "✅ OK"),
+                lambda r: "Out of Stock" if r["stock"] == 0 else ("Low Stock" if r["stock"] <= r["low_stock_threshold"] else "In Stock"),
                 axis=1
             )
             df_prod["Stock Value"] = df_prod["stock"] * df_prod["sale_price"]
@@ -155,13 +155,13 @@ def show():
 
     # ── Recent Transactions ───────────────────────────────────────────────────
     st.markdown("---")
-    st.markdown('<div class="card-title">🧾 Recent Transactions</div>', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">&#9644; Recent Transactions</div>', unsafe_allow_html=True)
     recent = txns[:10]
     if recent:
         df_r = pd.DataFrame(recent)[["txn_date", "type", "category", "amount", "description"]]
         df_r["amount"] = df_r["amount"].apply(lambda x: f"₹{x:,.2f}")
         df_r["type"]   = df_r["type"].apply(
-            lambda t: f"🟢 {t}" if t == "Income" else f"🔴 {t}"
+            lambda t: f"+ {t}" if t == "Income" else f"- {t}"
         )
         df_r.columns = ["Date", "Type", "Category", "Amount", "Description"]
         st.dataframe(df_r, use_container_width=True, hide_index=True)
