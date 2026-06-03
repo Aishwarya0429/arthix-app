@@ -48,7 +48,7 @@ else:
         analytics, reports, admin, profile,
     )
 
-   with st.sidebar:
+    with st.sidebar:
         # Brand
         st.markdown(f"""
         <div style="padding: 0 12px 16px; border-bottom: 1px solid #EDE9FE; margin-bottom: 4px;">
