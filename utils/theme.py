@@ -4,161 +4,199 @@ def apply_theme():
     st.markdown("""
     <style>
 
-    /* ── Google Fonts ── */
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
-
-    html, body, [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
-        background-color: #F8F5FF;
-        color: #1E1B4B;
+    /* ── Sidebar back to dark ── */
+    section[data-testid="stSidebar"] {
+        background-color: #0A0F1A !important;
+        border-right: 1px solid #1E2A3A !important;
+    }
+    section[data-testid="stSidebar"] * {
+        color: #94A3B8 !important;
     }
 
-    /* ── Hide Streamlit default chrome ── */
-    #MainMenu, footer, header { visibility: hidden; }
+    /* ── Sidebar buttons clean alignment ── */
+    section[data-testid="stSidebar"] .stButton button {
+        background: transparent !important;
+        border: none !important;
+        border-left: 2px solid transparent !important;
+        border-radius: 0 6px 6px 0 !important;
+        color: #94A3B8 !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        text-align: left !important;
+        padding: 9px 16px !important;
+        width: 100% !important;
+        transition: all 0.15s !important;
+        box-shadow: none !important;
+    }
+    section[data-testid="stSidebar"] .stButton button:hover {
+        background: #131D2E !important;
+        border-left: 2px solid #7C3AED !important;
+        color: #A78BFA !important;
+    }
+
+    /* ── Hide the duplicate logout button ── */
+    section[data-testid="stSidebar"] .stButton:last-child button {
+        color: #EF4444 !important;
+    }
+
+    /* ── Main background dark ── */
+    .main, .block-container {
+        background-color: #0F1623 !important;
+    }
     .block-container {
         padding-top: 1.5rem;
-        padding-bottom: 1rem;
         max-width: 1200px;
     }
 
-    /* ── Sidebar ── */
-    section[data-testid="stSidebar"] {
-        background-color: #FFFFFF;
-        border-right: 1px solid #EDE9FE;
-        padding-top: 0;
-    }
-    section[data-testid="stSidebar"] > div {
-        padding-top: 1rem;
-    }
+    /* ── Hide Streamlit chrome ── */
+    #MainMenu, footer, header { visibility: hidden; }
 
-    /* Sidebar nav links */
-    section[data-testid="stSidebar"] .stRadio label,
-    section[data-testid="stSidebar"] .stButton button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 9px 20px;
-        font-size: 13px;
-        font-weight: 400;
-        color: #64748B;
-        background: transparent;
-        border: none;
-        border-left: 2px solid transparent;
-        border-radius: 0;
-        text-align: left;
-        cursor: pointer;
-        transition: all 0.15s;
+    /* ── Page title ── */
+    .page-title {
+        font-size: 26px;
+        font-weight: 600;
+        color: #E2E8F0;
+        margin-bottom: 2px;
     }
-    section[data-testid="stSidebar"] .stButton button:hover {
-        color: #7C3AED;
-        background-color: #F5F3FF;
-        border-left: 2px solid #C4B5FD;
+    .page-subtitle {
+        font-size: 12px;
+        color: #475569;
+        margin-bottom: 20px;
     }
 
     /* ── KPI metric cards ── */
-    [data-testid="metric-container"] {
-        background: #FFFFFF;
-        border: 0.5px solid #EDE9FE;
-        border-radius: 10px;
-        padding: 14px 16px;
-    }
-    [data-testid="metric-container"] label {
-        font-size: 10px !important;
-        color: #94A3B8 !important;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-    }
-    [data-testid="metric-container"] [data-testid="stMetricValue"] {
-        font-size: 22px !important;
-        font-weight: 500 !important;
-        color: #1E1B4B !important;
-    }
-    [data-testid="metric-container"] [data-testid="stMetricDelta"] {
-        font-size: 11px !important;
-    }
-
-    /* ── Cards / containers ── */
-    .arthix-card {
-        background: #FFFFFF;
-        border: 0.5px solid #EDE9FE;
+    .metric-card {
+        background: #131D2E;
+        border: 0.5px solid #1E2A3A;
         border-radius: 10px;
         padding: 16px 18px;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
     }
-    .arthix-card-title {
-        font-size: 12px;
-        font-weight: 500;
-        color: #7C3AED;
+    .metric-icon {
+        font-size: 18px;
+        display: block;
+        margin-bottom: 6px;
+        color: #94A3B8;
+    }
+    .metric-label {
+        font-size: 10px;
+        color: #64748B;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
+        margin-bottom: 4px;
+    }
+    .metric-value {
+        font-size: 22px;
+        font-weight: 600;
+        color: #E2E8F0;
+    }
+    .metric-delta-pos {
+        font-size: 11px;
+        color: #10B981;
+    }
+    .metric-delta-neg {
+        font-size: 11px;
+        color: #EF4444;
+    }
+
+    /* ── Card titles ── */
+    .card-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: #94A3B8;
         margin-bottom: 10px;
         display: flex;
         align-items: center;
         gap: 6px;
     }
 
-    /* ── Greeting header ── */
-    .arthix-greeting {
-        font-size: 24px;
-        font-weight: 500;
-        color: #1E1B4B;
-        margin-bottom: 2px;
-    }
-    .arthix-subline {
+    /* ── Forecast tag ── */
+    .forecast-tag {
         font-size: 12px;
-        color: #94A3B8;
-        margin-bottom: 20px;
+        color: #64748B;
+        margin-top: 6px;
+        padding: 6px 10px;
+        background: #131D2E;
+        border-radius: 6px;
+        border: 0.5px solid #1E2A3A;
     }
 
-    /* ── Buttons ── */
-    .stButton > button {
-        background-color: #7C3AED;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 500;
-        padding: 8px 18px;
-        transition: background 0.15s;
+    /* ── Alert boxes ── */
+    .alert {
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        margin-bottom: 6px;
     }
-    .stButton > button:hover {
-        background-color: #6D28D9;
+    .alert-danger  { background: #2D1515; color: #FCA5A5; border: 0.5px solid #7F1D1D; }
+    .alert-warning { background: #2D2515; color: #FCD34D; border: 0.5px solid #78350F; }
+    .alert-success { background: #152D1E; color: #6EE7B7; border: 0.5px solid #064E3B; }
+
+    /* ── Sidebar brand ── */
+    .sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 16px 8px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #E2E8F0 !important;
+    }
+    .brand-icon {
+        font-size: 20px;
+    }
+    .brand-text {
+        color: #E2E8F0 !important;
+    }
+    .sidebar-biz {
+        font-size: 11px;
+        color: #475569 !important;
+        padding: 0 16px 6px;
+    }
+    .sidebar-role {
+        padding: 0 16px 12px;
+    }
+    .role-badge {
+        font-size: 10px;
+        color: #7C3AED !important;
+        border: 1px solid #4C1D95;
+        background: #1E1035;
+        border-radius: 20px;
+        padding: 2px 10px;
+        letter-spacing: 0.05em;
+    }
+
+    /* ── Tables ── */
+    .stDataFrame {
+        border: 0.5px solid #1E2A3A;
+        border-radius: 8px;
     }
 
     /* ── Inputs ── */
     .stTextInput input,
     .stSelectbox select,
     .stNumberInput input {
-        border: 0.5px solid #DDD6FE;
-        border-radius: 8px;
-        background: #FFFFFF;
-        color: #1E1B4B;
-        font-size: 13px;
-    }
-    .stTextInput input:focus,
-    .stSelectbox select:focus {
-        border-color: #7C3AED;
-        box-shadow: 0 0 0 2px rgba(124,58,237,0.1);
+        background: #131D2E !important;
+        border: 0.5px solid #1E2A3A !important;
+        color: #E2E8F0 !important;
+        border-radius: 8px !important;
     }
 
-    /* ── Tables ── */
-    .stDataFrame, .stTable {
-        border: 0.5px solid #EDE9FE;
-        border-radius: 8px;
-        overflow: hidden;
+    /* ── Buttons ── */
+    .stButton > button {
+        background-color: #7C3AED !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
     }
-
-    /* ── Alerts ── */
-    .stAlert {
-        border-radius: 8px;
-        font-size: 13px;
+    .stButton > button:hover {
+        background-color: #6D28D9 !important;
     }
 
     /* ── Divider ── */
-    hr {
-        border-color: #EDE9FE;
-    }
+    hr { border-color: #1E2A3A !important; }
 
     </style>
     """, unsafe_allow_html=True)
