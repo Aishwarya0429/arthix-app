@@ -41,7 +41,7 @@ def show():
 
     # ── KPI Cards ─────────────────────────────────────────────────────────────
     c1, c2, c3, c4 = st.columns(4)
-   cards = [
+    cards = [
         (c1, "&#8358;", "Total Revenue",  kpi["month_income"],  kpi.get("income_growth", 0),   "#7C3AED"),
         (c2, "&#9653;", "Total Expenses", kpi["month_expense"],
          ((kpi["month_expense"]-kpi["last_expense"])/kpi["last_expense"]*100 if kpi["last_expense"] else 0), "#EF4444"),
@@ -99,7 +99,7 @@ def show():
             ch.render_chart(st, fig)
 
     with col_r2:
-        st.markdown('<div class="card-title">🔮 30-Day Profit Forecast</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">&#9650; 30-Day Profit Forecast</div>', unsafe_allow_html=True)
         daily_all = get_daily_summary(bid, days=90)
         if not daily_all.empty and len(daily_all) >= 7:
             fcast = forecast_revenue(daily_all, days_ahead=30)
@@ -113,7 +113,7 @@ def show():
                 next_m_profit = fcast["profit"].sum()
                 st.markdown(f"""
                 <div class="forecast-tag">
-                    &#9670; AI Prediction · Next 30 days estimated profit::
+                    &#9670; AI Prediction · Next 30 days estimated profit:
                     <strong style="color:#6C63FF">{fmt(next_m_profit)}</strong>
                 </div>
                 """, unsafe_allow_html=True)
@@ -129,7 +129,7 @@ def show():
         out = [p for p in products if p["stock"] == 0]
         if out:
             for p in out[:3]:
-                st.markdown(f'<div class="alert alert-danger">&#9632; <b>{p["name"]}</b> — Out of stock!</div>',
+                st.markdown(f'<div class="alert alert-danger">&#9632; <b>{p["name"]}</b> — Out of stock</div>',
                             unsafe_allow_html=True)
         if low:
             for p in low[:3]:
