@@ -49,6 +49,7 @@ else:
     )
 
     with st.sidebar:
+        st.write("SIDEBAR TEST")
         # Brand
         st.markdown(f"""
         <div class="sidebar-brand">
